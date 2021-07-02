@@ -1,0 +1,33 @@
+.board {
+  margin-top: 16px;
+  background-color: #F4D5AB;
+  width: 600px;
+  margin: auto;
+  border: 2px solid black;
+}
+
+h3 {
+  border-bottom: 2px solid black;
+  margin-bottom: 0;
+}
+
+.answers {
+  display: grid;
+  height: 400px;
+  grid-template-columns: 1fr 1fr;
+
+}
+
+.answers div {
+  margin: 0 -1px -1px 0;
+  border: 1px solid black;
+  font-size: 35px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-transform: capitalize;
+}
+
+.not-guessed {
+  visibility: hidden;
+}

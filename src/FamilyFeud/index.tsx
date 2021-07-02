@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./index.css";
 
 type answer = {
   answer: string;
@@ -6,8 +7,12 @@ type answer = {
   guessed: boolean;
 };
 
+type gridAutoRows = {
+  [key: number]: string;
+};
+
 const prompt = {
-  question: "Favorite Animal?",
+  question: "What is your favorite animal?",
   answers: [
     {
       answer: "dog",
@@ -37,6 +42,13 @@ const prompt = {
   ],
 };
 
+const autoRows: gridAutoRows = {
+  5: "33.3",
+  6: "33.3",
+  7: "25",
+  8: "25",
+};
+
 function FamilyFeud() {
   const [guess, setGuess] = useState("");
   const [board, setBoard] = useState<answer[]>(prompt.answers);
@@ -57,35 +69,48 @@ function FamilyFeud() {
             el.guessed = true;
           }
           return el;
-        })
+        });
         setBoard(newBoard);
       } else {
         setWrongAnswers([...wrongAnswers, guess]);
       }
+
+      setGuess("");
     }
   };
 
   return (
     <div>
-      <h1>Family Feud</h1>
-      <h3>{prompt.question}</h3>
       <div>
-        {board.map((el, i) =>
-          el.guessed ? (
-            <div key={i}>
-              {el.score} {el.answer}
+        <div className="board">
+          <h3>{prompt.question}</h3>
+          <div
+            className="answers"
+            style={{ gridAutoRows: autoRows[board.length] }}
+          >
+            {board.map((el, i) =>
+              el.guessed ? (
+                <div key={i}>
+                  <span>{el.answer}</span> <span>{el.score}</span>
+                </div>
+              ) : (
+                <div key={i}>
+                  <span className="not-guessed">{el.answer}</span>{" "}
+                  <span className="not-guessed">{el.score}</span>
+                </div>
+              )
+            )}
+          </div>
+        </div>
+        <div>
+          {wrongAnswers.map((wrongAnswer, i) => (
+            <div key={i} style={{ textDecorationLine: "line-through" }}>
+              {wrongAnswer}
             </div>
-          ) : null
-        )}
+          ))}
+        </div>
       </div>
       <input onChange={handleInput} onKeyPress={handleGuess} value={guess} />
-      <div>
-        {wrongAnswers.map((wrongAnswer, i) => (
-          <div key={i} style={{ textDecorationLine: "line-through" }}>
-            {wrongAnswer}
-          </div>
-        ))}
-      </div>
     </div>
   );
 }
