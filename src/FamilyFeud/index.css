@@ -28,6 +28,23 @@ h3 {
   text-transform: capitalize;
 }
 
+.wrong-answers {
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+  justify-content: space-evenly;
+}
+
+.wrong-answer {
+  text-decoration: line-through;
+}
+
 .not-guessed {
   visibility: hidden;
+}
+
+@media only screen and (max-width: 600px) {
+  .board {
+    width: 99vw;
+  }
 }
