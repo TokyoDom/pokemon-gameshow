@@ -1,8 +1,7 @@
 .board {
-  margin-top: 16px;
   background-color: #F4D5AB;
   width: 600px;
-  margin: auto;
+  margin: 16px auto;
   border: 2px solid black;
 }
 
@@ -40,6 +39,10 @@
 
 .not-guessed {
   visibility: hidden;
+}
+
+.not-guessed-gameover {
+  color: red;
 }
 
 @media only screen and (max-width: 600px) {

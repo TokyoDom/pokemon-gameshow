@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import "./index.css";
-import { FamilyFeudQuestions } from "../dummyData.js"; 
+import { FamilyFeudQuestions } from "../dummyData.js";
 
 type answer = {
   answer: string;
@@ -13,7 +13,8 @@ type gridAutoRows = {
   [key: number]: string;
 };
 
-let prompt = FamilyFeudQuestions[Math.floor(Math.random() * FamilyFeudQuestions.length)];
+let prompt =
+  FamilyFeudQuestions[Math.floor(Math.random() * FamilyFeudQuestions.length)];
 
 const autoRows: gridAutoRows = {
   5: "33.3",
@@ -69,14 +70,17 @@ function FamilyFeud() {
 
   const playAgain = () => {
     setGuess("");
-    prompt = FamilyFeudQuestions[Math.floor(Math.random() * FamilyFeudQuestions.length)];
+    prompt =
+      FamilyFeudQuestions[
+        Math.floor(Math.random() * FamilyFeudQuestions.length)
+      ];
     setBoard(prompt.answers.map((el) => ({ ...el })));
     setGameOver(false);
     setWrongAnswers([]);
   };
 
-  return (
-    <div>
+  const renderBoard = () => {
+    return (
       <div className="board">
         <h3>{prompt.question}</h3>
         <div
@@ -90,14 +94,28 @@ function FamilyFeud() {
               </div>
             ) : (
               <div key={i}>
-                <span className="not-guessed">{el.answer}</span>{" "}
-                <span className="not-guessed">{el.score}</span>
+                <span
+                  className={gameOver ? "not-guessed-gameover" : "not-guessed"}
+                >
+                  {el.answer}
+                </span>{" "}
+                <span
+                  className={gameOver ? "not-guessed-gameover" : "not-guessed"}
+                >
+                  {el.score}
+                </span>
               </div>
             )
           )}
         </div>
       </div>
+    );
+  };
+
+  return (
+    <div>
       <div className="action">
+        {renderBoard()}
         {!gameOver ? (
           <input
             onChange={handleInput}
