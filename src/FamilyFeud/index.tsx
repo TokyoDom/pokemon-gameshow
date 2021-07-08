@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import Button from"react-bootstrap/Button";
+import Button from "react-bootstrap/Button";
 import "./index.css";
+import { FamilyFeudQuestions } from "../dummyData.js"; 
 
 type answer = {
   answer: string;
@@ -12,36 +13,7 @@ type gridAutoRows = {
   [key: number]: string;
 };
 
-const prompt = {
-  question: "What is your favorite animal?",
-  answers: [
-    {
-      answer: "dog",
-      score: 35,
-      guessed: false,
-    },
-    {
-      answer: "cat",
-      score: 30,
-      guessed: false,
-    },
-    {
-      answer: "fish",
-      score: 15,
-      guessed: false,
-    },
-    {
-      answer: "horse",
-      score: 10,
-      guessed: false,
-    },
-    {
-      answer: "snake",
-      score: 10,
-      guessed: false,
-    },
-  ],
-};
+let prompt = FamilyFeudQuestions[Math.floor(Math.random() * FamilyFeudQuestions.length)];
 
 const autoRows: gridAutoRows = {
   5: "33.3",
@@ -52,7 +24,9 @@ const autoRows: gridAutoRows = {
 
 function FamilyFeud() {
   const [guess, setGuess] = useState("");
-  const [board, setBoard] = useState<answer[]>(prompt.answers.map(el => ({... el })));
+  const [board, setBoard] = useState<answer[]>(
+    prompt.answers.map((el) => ({ ...el }))
+  );
   const [wrongAnswers, setWrongAnswers] = useState<string[]>([]);
   const [gameOver, setGameOver] = useState(false);
 
@@ -62,12 +36,12 @@ function FamilyFeud() {
   };
 
   const handleGuess = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (gameOver) return;
+    if (gameOver || !guess) return;
 
     if (e.key === "Enter") {
-      if (board.find((el) => el.answer === guess)) {
+      if (board.find((el) => el.answer.toLowerCase() === guess.toLowerCase())) {
         const newBoard = board.map((el) => {
-          if (el.answer === guess) {
+          if (el.answer.toLowerCase() === guess.toLowerCase()) {
             el.guessed = true;
           }
           return el;
@@ -95,10 +69,11 @@ function FamilyFeud() {
 
   const playAgain = () => {
     setGuess("");
-    setBoard(prompt.answers.map(el => ({... el })));
+    prompt = FamilyFeudQuestions[Math.floor(Math.random() * FamilyFeudQuestions.length)];
+    setBoard(prompt.answers.map((el) => ({ ...el })));
     setGameOver(false);
     setWrongAnswers([]);
-  }
+  };
 
   return (
     <div>
@@ -122,11 +97,19 @@ function FamilyFeud() {
           )}
         </div>
       </div>
-      <div className="action">{!gameOver ? (
-        <input onChange={handleInput} onKeyPress={handleGuess} value={guess} />
-      ) : (
-        <Button variant="primary" onClick={playAgain}>Play Again</Button>
-      )}</div>
+      <div className="action">
+        {!gameOver ? (
+          <input
+            onChange={handleInput}
+            onKeyPress={handleGuess}
+            value={guess}
+          />
+        ) : (
+          <Button variant="primary" onClick={playAgain}>
+            Play Again
+          </Button>
+        )}
+      </div>
       <div className="wrong-answers">
         {wrongAnswers.map((wrongAnswer, i) => (
           <div key={i} className="wrong-answer">
