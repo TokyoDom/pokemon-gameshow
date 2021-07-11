@@ -97,12 +97,12 @@ function FamilyFeud() {
                 <span
                   className={gameOver ? "not-guessed-gameover" : "not-guessed"}
                 >
-                  {el.answer}
+                  {gameOver ? el.answer : "no guess"}
                 </span>{" "}
                 <span
                   className={gameOver ? "not-guessed-gameover" : "not-guessed"}
                 >
-                  {el.score}
+                  {gameOver ? el.score : 0}
                 </span>
               </div>
             )
