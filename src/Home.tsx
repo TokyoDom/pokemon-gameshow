@@ -2,11 +2,9 @@ import { Link } from "react-router-dom";
 
 function Home() {
   return (
-    <ul>
-      <li>
-        <Link to="/familyfeud">Family Feud</Link>
-      </li>
-    </ul>
+    <div>
+      <Link to="/familyfeud">Family Feud</Link>
+    </div>
   );
 }
 

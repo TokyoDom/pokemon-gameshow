@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import "./index.css";
-import { FamilyFeudQuestions } from "../dummyData.js";
 
 type answer = {
   answer: string;
@@ -13,9 +13,6 @@ type gridAutoRows = {
   [key: number]: string;
 };
 
-let prompt =
-  FamilyFeudQuestions[Math.floor(Math.random() * FamilyFeudQuestions.length)];
-
 const autoRows: gridAutoRows = {
   5: "33.3",
   6: "33.3",
@@ -23,7 +20,16 @@ const autoRows: gridAutoRows = {
   8: "25",
 };
 
-function FamilyFeud() {
+interface propTypes {
+  idx: number;
+  length: number;
+  prompt: {
+    question: string;
+    answers: answer[];
+  };
+}
+
+function FamilyFeud({ idx, prompt, length }: propTypes) {
   const [guess, setGuess] = useState("");
   const [board, setBoard] = useState<answer[]>(
     prompt.answers.map((el) => ({ ...el }))
@@ -68,15 +74,17 @@ function FamilyFeud() {
     }
   };
 
-  const playAgain = () => {
-    setGuess("");
-    prompt =
-      FamilyFeudQuestions[
-        Math.floor(Math.random() * FamilyFeudQuestions.length)
-      ];
-    setBoard(prompt.answers.map((el) => ({ ...el })));
-    setGameOver(false);
-    setWrongAnswers([]);
+  const renderPlayAgain = () => {
+    const numbers = [];
+    for (let i = 1; i <= length; i++) {
+      if (i !== idx) numbers.push(i);
+    }
+
+    const num = numbers[Math.floor(Math.random() * numbers.length)];
+
+    return (
+      <Button color="primary">Play Again</Button>
+    );
   };
 
   const renderBoard = () => {
@@ -123,9 +131,7 @@ function FamilyFeud() {
             value={guess}
           />
         ) : (
-          <Button variant="primary" onClick={playAgain}>
-            Play Again
-          </Button>
+          renderPlayAgain()
         )}
       </div>
       <div className="wrong-answers">

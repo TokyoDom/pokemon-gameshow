@@ -1,3 +1,7 @@
+body {
+  text-align: center;
+}
+
 .board {
   background-color: #F4D5AB;
   width: 600px;
