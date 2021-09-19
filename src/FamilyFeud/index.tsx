@@ -80,8 +80,6 @@ function FamilyFeud({ idx, prompt, length }: propTypes) {
       if (i !== idx) numbers.push(i);
     }
 
-    const num = numbers[Math.floor(Math.random() * numbers.length)];
-
     return (
       <Button color="primary">Play Again</Button>
     );
